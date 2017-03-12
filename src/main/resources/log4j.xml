@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+ 
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+ 
+    <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{ABSOLUTE} %-5p [%c{1}:%L] %m%n" />
+        </layout>
+    </appender>
+
+    <!-- Spring Webservice XML -->
+    <logger name="org.springframework.ws.client.MessageTracing">
+        <level value="TRACE"/>
+    </logger>
+    <logger name="org.springframework.ws.server.MessageTracing">
+        <level value="TRACE"/>
+    </logger>
+ 
+    <root>
+        <priority value="INFO" />
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+</log4j:configuration>

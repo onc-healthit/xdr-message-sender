@@ -1,0 +1,4 @@
+<Context reloadable="true">
+    <Parameter name="sampleCcdaDir" value="${sampleCcdaDir}" override="true"/>
+	<Parameter name="xdrvalidator.service.endpoint" value="${xdrvalidator.service.endpoiny}" override="true"/>
+</Context>
