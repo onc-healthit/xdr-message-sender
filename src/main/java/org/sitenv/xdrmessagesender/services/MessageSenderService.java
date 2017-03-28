@@ -2,6 +2,7 @@ package org.sitenv.xdrmessagesender.services;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.sitenv.xdrmessagesender.dto.MessageSenderResult;
 import org.sitenv.xdrmessagesender.dto.XdrMessageMetaDataProperties;
 import org.sitenv.xdrmessagesender.services.enums.XdrMessageType;
@@ -21,28 +22,24 @@ public class MessageSenderService {
 
     public MessageSenderResult sendMessageWithAttachment(URL endpoint, byte[] attachmentFile, XdrMessageMetaDataProperties messageProperties, XdrMessageType xdrMessageType){
         MessageSenderResult messageSenderResult = new MessageSenderResult();
+        String payload = null;
         try {
             String metaDataFileContents = getMetaData(xdrMessageType);
             String xdrMessageMetaData = prepareXdrMessageMetaData(endpoint, metaDataFileContents, messageProperties);
             String mtomPackage = XdrMessageSenderUtils.createMtomPackage(xdrMessageMetaData, new String(attachmentFile));
-            String payload = XdrMessageSenderUtils.addHTTPHeadersToPayload(endpoint, mtomPackage);
+            payload = XdrMessageSenderUtils.addHTTPHeadersToPayload(endpoint, mtomPackage);
             String response = XdrSocket.sendMessage(endpoint, payload);
-            setSuccessfulMessageSenderResult(messageSenderResult, response, payload);
+            setMessageSenderResult(messageSenderResult, true, response, payload);
         } catch (IOException e) {
-            setUnsuccessfulMessageSenderResult(messageSenderResult, e.getMessage());
+            setMessageSenderResult(messageSenderResult, false, ExceptionUtils.getStackTrace(e), payload);
         }
         return messageSenderResult;
     }
 
-    private void setSuccessfulMessageSenderResult(MessageSenderResult messageSenderResult, String response, String payload){
-        messageSenderResult.setSuccess(true);
+    private void setMessageSenderResult(MessageSenderResult messageSenderResult, boolean success, String response, String payload){
+        messageSenderResult.setSuccess(success);
         messageSenderResult.setMessage(response);
         messageSenderResult.setPayload(payload);
-    }
-
-    private void setUnsuccessfulMessageSenderResult(MessageSenderResult messageSenderResult, String error){
-        messageSenderResult.setSuccess(false);
-        messageSenderResult.setMessage(error);
     }
 
     private String getEncodedFile(byte[] ccdaFile) throws IOException {
