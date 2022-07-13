@@ -8,7 +8,7 @@
     <packaging>war</packaging>
 
 	<properties>
-		<logback.version>1.2.3</logback.version>
+		<logback.version>1.2.11</logback.version>
 	</properties>
 	
     <dependencies>
