@@ -26,9 +26,6 @@
     <logger name="org.springframework.ws.client.MessageTracing" level="TRACE">
         <appender-ref ref="FILE-ROLLING" />
     </logger>
-    <logger name="org.springframework.ws.server.MessageTracing" level="TRACE">
-        <appender-ref ref="FILE-ROLLING" />
-    </logger>
 
     <!-- https://logback.qos.ch/manual/appenders.html#AsyncAppender -->
     <!-- AsyncAppender will drop events of level TRACE, DEBUG and INFO if its queue is 80% full -->
