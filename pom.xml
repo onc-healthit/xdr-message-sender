@@ -7,6 +7,10 @@
     <version>1.0.3-SNAPSHOT</version>
     <packaging>war</packaging>
 
+	<properties>
+		<logback.version>1.2.11</logback.version>
+	</properties>
+	
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -96,12 +100,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-messaging</artifactId>
         </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.14</version>
-            <scope>runtime</scope>
-        </dependency>
+         <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>    
     </dependencies>
 
     <dependencyManagement>
